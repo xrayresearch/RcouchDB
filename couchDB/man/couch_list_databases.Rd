@@ -1,0 +1,13 @@
+\name{couch_list_databases}
+\alias{couch_list_databases}
+\title{List available databases.}
+\usage{
+couch_list_databases(conn)
+}
+\arguments{
+  \item{conn}{A couchDB connection object}
+}
+\description{
+Lists the available databases on the connection provided.
+}
+

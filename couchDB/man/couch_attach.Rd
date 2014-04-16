@@ -1,0 +1,20 @@
+\name{couch_attach}
+\alias{couch_attach}
+\title{Add attachment to document}
+\usage{
+couch_attach(location, revtag, attachment, content_type = "image/png")
+}
+\arguments{
+  \item{location}{url of the}
+
+  \item{revtag}{revision (version)}
+
+  \item{attachment}{file to attach}
+
+  \item{content_type}{Content type of the attachment (for
+  example: "image/png")}
+}
+\description{
+Send attachment to an existing url
+}
+

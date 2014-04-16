@@ -1,0 +1,20 @@
+\name{couch_delete}
+\alias{couch_delete}
+\title{Delete a record.}
+\usage{
+couch_delete(conn, database, key, myOpts = NULL)
+}
+\arguments{
+  \item{conn}{A couchDB connection object}
+
+  \item{database}{Name of database to operate on}
+
+  \item{key}{key (record) to delete}
+
+  \item{myOpts}{Additional options (not implemented in this
+  version)}
+}
+\description{
+Delete a record on the connection provided
+}
+

@@ -1,0 +1,22 @@
+\name{couch_create_database}
+\alias{couch_create_database}
+\title{Create database}
+\usage{
+couch_create_database(conn, dbname)
+}
+\arguments{
+  \item{conn}{a couchDB connection object}
+
+  \item{dbname}{the name of the database}
+}
+\description{
+Creates a new database based on the dbname.
+}
+\examples{
+\dontrun{
+#Note: this example assumes that there is a couchDB instance available on localhost
+   myConn <- couch_http_connection("localhost");
+   couch_create_database(myConn,"myDatabase")
+}
+}
+

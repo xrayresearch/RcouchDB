@@ -1,0 +1,23 @@
+\name{couch_fetch}
+\alias{couch_fetch}
+\title{Fetch a document/record.}
+\usage{
+couch_fetch(conn, database, key, myOpts = NULL)
+}
+\arguments{
+  \item{conn}{A couchDB connection object}
+
+  \item{database}{The database to connect to.}
+
+  \item{key}{Key of document to fetch}
+
+  \item{myOpts}{Additional options (not implemented in this
+  version)}
+}
+\value{
+A list object with the values from the record.
+}
+\description{
+Fetches a couch object based on the key
+}
+

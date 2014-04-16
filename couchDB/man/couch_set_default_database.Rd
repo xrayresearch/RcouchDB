@@ -1,0 +1,14 @@
+\name{couch_set_default_database}
+\alias{couch_set_default_database}
+\title{Set a database as default document store}
+\usage{
+couch_set_default_database(database)
+}
+\arguments{
+  \item{database}{the database to use as default (String);}
+}
+\description{
+Specifies a database to write to on a couch connection by
+default.
+}
+

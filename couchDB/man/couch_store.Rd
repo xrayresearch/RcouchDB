@@ -1,0 +1,19 @@
+\name{couch_store}
+\alias{couch_store}
+\title{Store a record}
+\usage{
+couch_store(conn, obj, myOpts = NULL)
+}
+\arguments{
+  \item{conn}{A couchDB connection object}
+
+  \item{obj}{A list formatted by calling couch_new_object}
+
+  \item{myOpts}{Additional options (not implemented in this
+  version)}
+}
+\description{
+Stores a record to the connection provided (database spec
+is in object )
+}
+
