@@ -198,7 +198,8 @@ couch_fetch_raw <- function(conn, database, key, opts=NULL) {
     result
   } else {
     # TODO
-    simpleError("Error fetching value from CouchDB")
+    warning("Error fetching value from CouchDB");
+    result
   }
 }
 
