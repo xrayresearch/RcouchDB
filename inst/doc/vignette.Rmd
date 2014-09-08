@@ -1,0 +1,61 @@
+---
+title: "couchDB Vignette"
+author: "Aleksander Dietrichson <sasha@xrayresearh.com>"
+date: "September 8, 2014"
+output: html_document
+---
+
+### Abstract
+The couchDB package has been designed for communication with couchDB, a popular noSQL database. For details consult the help pages for
+
+ * couch_http_connection
+ * couch_create_database
+ * couch_fetch
+ * couch_store
+ 
+### 1 Get connected
+To interact with a couchDB instance you will need to create a connection object. Communication with couchDB happens over a http protocol. A minimal connection (running on the default port and no password protection) would be:
+```
+myConn  <- couch_http_connection("localhost")
+```
+ 
+The variable "myConn" can now be used as parameters to other functions. 
+ 
+For convenience a default connection can also be created with **couch_set_default_connection** using the same parameters.
+
+Once a connection object exists, you may want to make sure it is connecting correctly with the **couch_ping** function. If you are properly connected the reponse should look like:
+
+```
+  Response [http://localhost:5984]
+  Status: 200
+  Content-type: text/plain; charset=utf-8
+  Size: 151 B
+  {"couchdb":"Welcome","uuid":"c1a367c91517195b57ddafe788a72b75","version":"1.4.0","vendor"
+  {"name":"...
+```
+### 2. Working with couchDB databases
+On a couchDB install there can be several databases (i.e. namespaces). The function
+
+ * couch_list_databases 
+ 
+will provide a list of available databases on the connection provided.
+
+The function **couch_create_database** will, similarly, allow you to create a new database or namespace on the couchDB instance.
+
+### 3. Setting defaults
+CouchDB allows for setting a default connection and a default database to work with. This is useful, and provides for cleaner code, if you are mainly working with one specific database at a specific connection.  
+
+### 4. Working with documents
+ Once you have a connection and a database to work with you can fetch, store and delete documents by using the corresponding functions:
+ 
+ * couch_fetch
+ * couch_fetch_default
+ * couch_store
+ * couch_store_default 
+ *couch_delete
+ 
+The document to be stored can be provided either as a list (which will be converted to json for insertion), or for tighter control over the document structure a character vector in json format can be provided.
+
+### References
+R Development Core Team. _Writing R Extensions._ R Foundation for Statistical
+Computing, Vienna, Austria, 2008.
