@@ -12,6 +12,10 @@ couch_http_connection(host, port = 5984, https = FALSE, user = NULL,
 \item{port}{The port to connect to}
 
 \item{https}{Should a ssl protocol be used}
+
+\item{user}{Username on the database server}
+
+\item{password}{Password for the database server}
 }
 \description{
 Creates a connection object on the host and ports provided

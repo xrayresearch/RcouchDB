@@ -3,15 +3,16 @@
 \alias{couch_fetch_attachment_url}
 \title{Get attachment url}
 \usage{
-couch_fetch_attachment_url(conn, database, key = NULL, attachment = NULL,
-  opts = NULL)
+couch_fetch_attachment_url(conn, database, key = NULL, attachment = NULL)
 }
 \arguments{
-\item{database}{the database}
+\item{conn}{A connection object}
 
-\item{key}{document key}
+\item{database}{The database name}
 
-\item{attachment}{name of the attachment}
+\item{key}{Document key}
+
+\item{attachment}{Name of the attachment}
 }
 \description{
 Get the url for a specific attachment, This is sometimes useful for direct reads to functions, in lieu of storing tempfiles.

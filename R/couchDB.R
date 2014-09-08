@@ -54,11 +54,12 @@ couch_fetch_url <- function(conn,database,key=NULL,opts=NULL){
 
 #'@title Get attachment url
 #'@description Get the url for a specific attachment, This is sometimes useful for direct reads to functions, in lieu of storing tempfiles.
-#'@param database the database
-#'@param key document key
-#'@param attachment name of the attachment
+#'@param conn A connection object
+#'@param database The database name
+#'@param key Document key
+#'@param attachment Name of the attachment
 #'@export
-couch_fetch_attachment_url <- function(conn,database,key=NULL,attachment=NULL,opts=NULL){
+couch_fetch_attachment_url <- function(conn,database,key=NULL,attachment=NULL){
   url <- paste(couch_base_url(conn), database, key,attachment, sep="/");
   url;
 }
@@ -128,6 +129,8 @@ couch_list_databases_url <- function(conn) {
 #' @param host The IP address of the couchDB instance
 #' @param port The port to connect to
 #' @param https Should a ssl protocol be used
+#' @param user Username on the database server
+#' @param password Password for the database server
 #' @examples \dontrun{ 
 #'    myConn <- couch_http_connection(host="localhost");
 #' } 

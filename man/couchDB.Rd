@@ -6,8 +6,7 @@
 \title{Functions for interacting with a couchDB database,}
 \description{
 This package contains various functions for interacting with couchDB  - a document database.
-For more information about the couchDB database see \link{http://couchdb.apache.org/}
-\link{xrayReport}
+For more information about the couchDB database see: http://couchdb.apache.org.
 }
 \section{Get connected}{
 

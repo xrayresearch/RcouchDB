@@ -2,8 +2,7 @@
 #' 
 #'
 #' This package contains various functions for interacting with couchDB  - a document database.
-#' For more information about the couchDB database see \link{http://couchdb.apache.org/}
-#' \link{xrayReport}
+#' For more information about the couchDB database see: http://couchdb.apache.org.
 #' @section Get connected:
 #' To interact with a couchDB instance you will need to create a connection object. Communication with couchDB happens over a http protocol. A minimal connection (running on the default port and no password protection) would be:
 #' 
