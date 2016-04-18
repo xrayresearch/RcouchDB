@@ -142,8 +142,11 @@ couch_list_databases_url <- function(conn) {
 #'    myConn <- couch_http_connection(host="localhost")
 #' } 
 #' @export
-couch_http_connection <- function(host, port=5984, https=FALSE, 
-                                   user=NULL, password=NULL) {
+couch_http_connection <- function(host, 
+                                  port=5984, 
+                                  https=FALSE, 
+                                  user=NULL, 
+                                  password=NULL) {
   
   conn <- list(couch_http_host = host, 
                couch_http_port = port, 
@@ -186,10 +189,12 @@ couch_check_status <- function(conn, expected_codes, response) {
 #' @param conn A couchDB connection object.
 #' @export
 couch_ping <- function(conn) {
-  path <- couch_base_url(conn)
-  expected_codes = c(200)
-  result <- GET(path)
-  couch_check_status(conn, expected_codes, result)
+  try({
+    path <- couch_base_url(conn)
+    expected_codes = c(200)
+    result <- GET(path)
+    couch_check_status(conn, expected_codes, result)
+  })
 }
 
 # Internal use
