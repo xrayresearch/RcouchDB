@@ -1,4 +1,4 @@
-# RcouchDB
+# R-couchDB
 R interface to the CouchDB database
 
 ## Description
