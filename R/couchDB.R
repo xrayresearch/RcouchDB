@@ -8,23 +8,23 @@ require(rjson)
 #'@import httr
 #'@import rjson
 #description formats name-value pair as url parameter
-couch_default_database=NULL
-couch_default_connection=NULL
+couch_default_database = NULL
+couch_default_connection = NULL
 url_param <- function(name, value) {
   if(is.null(value)) {
     NULL
   } else {
     if(is.logical(value)) {
-      paste(name,"=",curlEscape(tolower(value)), sep="")
+      paste(name," = ",curlEscape(tolower(value)), sep = "")
     } else {
-      paste(name,"=",curlEscape(value), sep="")
+      paste(name," = ",curlEscape(value), sep = "")
     }
   }
 }
 
 make_query_string <- function(params) {
-  params2 <- paste(params, collapse="&")
-  paste("?", params2, sep="")
+  params2 <- paste(params, collapse = "&")
+  paste("?", params2, sep = "")
 }
 
 couch_base_url <- function(conn) {
@@ -48,8 +48,8 @@ couch_base_url <- function(conn) {
   base_url
 }
 
-couch_fetch_url <- function(conn,database,key=NULL,opts=NULL){
-  url <- paste(couch_base_url(conn), database, key, sep="/")
+couch_fetch_url <- function(conn,database,key = NULL,opts = NULL){
+  url <- paste(couch_base_url(conn), database, key, sep = "/")
   url
 }
 
@@ -61,16 +61,16 @@ couch_fetch_url <- function(conn,database,key=NULL,opts=NULL){
 #'@param key Document key
 #'@param attachment Name of the attachment
 #'@export
-couch_fetch_attachment_url <- function(conn,database,key=NULL,attachment=NULL){
-  url <- paste(couch_base_url(conn), database, key,attachment, sep="/")
+couch_fetch_attachment_url <- function(conn,database,key = NULL,attachment = NULL){
+  url <- paste(couch_base_url(conn), database, key,attachment, sep = "/")
   url
 }
 
-couch_store_url <- function(conn, database, key=NULL, opts=NULL) {
+couch_store_url <- function(conn, database, key = NULL, opts = NULL) {
   if(is.null(key)) {
-    url <- paste(couch_base_url(conn), database, sep="/")
+    url <- paste(couch_base_url(conn), database, sep = "/")
   } else {
-    url <- paste(couch_base_url(conn), database, key, sep="/")
+    url <- paste(couch_base_url(conn), database, key, sep = "/")
     #check for revision number
     revision_number <- HEAD(url)$header$etag
     if(!is.null(revision_number)){ 
@@ -85,16 +85,16 @@ couch_get_headers <- function(conn,database,key){
   result <- HEAD(path)$headers
   result
 }
-couch_delete_url <- function(conn, database, key, myOpts=NULL) {
+couch_delete_url <- function(conn, database, key, myOpts = NULL) {
   url <- paste("databases", database, "keys", key)
-  paste(url, sep="")
+  paste(url, sep = "")
 }
 couch_stats_url <- function(conn) {
-  paste(couch_base_url(conn), "/stats", sep="")
+  paste(couch_base_url(conn), "/stats", sep = "")
 }
 #TODO: update this
 couch_mapred_url <- function(conn) {
-  paste(couch_base_url(conn), "/mapred", sep="")
+  paste(couch_base_url(conn), "/mapred", sep = "")
 }
 #'@title Set default connection
 #'@description Sets up a couchDB connection to use as default
@@ -102,10 +102,10 @@ couch_mapred_url <- function(conn) {
 #' @param port The port to connect to
 #' @param https Should a ssl protocol be used?
 #' @export
-couch_set_default_connection <- function(host,port=5984, https=FALSE){
-  couch_default_connection <<- couch_http_connection(host=host,
-                                                     port=port,
-                                                     https=https)
+couch_set_default_connection <- function(host,port = 5984, https = FALSE){
+  couch_default_connection <<- couch_http_connection(host = host,
+                                                     port = port,
+                                                     https = https)
 }
 
 #'@title Set a database as default document store
@@ -126,7 +126,7 @@ couch_set_default_database <- function(database){
 #for internal use
 #param conn: A couchDB connection object.
 couch_list_databases_url <- function(conn) {
-  paste(couch_base_url(conn), "_all_dbs", sep="/")
+  paste(couch_base_url(conn), "_all_dbs", sep = "/")
 }
 
 ### operations
@@ -139,20 +139,20 @@ couch_list_databases_url <- function(conn) {
 #' @param user Username on the database server
 #' @param password Password for the database server
 #' @examples \dontrun{ 
-#'    myConn <- couch_http_connection(host="localhost")
+#'    myConn <- couch_http_connection(host = "localhost")
 #' } 
 #' @export
 couch_http_connection <- function(host, 
-                                  port=5984, 
-                                  https=FALSE, 
-                                  user=NULL, 
-                                  password=NULL) {
+                                  port = 5984, 
+                                  https = FALSE, 
+                                  user = NULL, 
+                                  password = NULL) {
   
   conn <- list(couch_http_host = host, 
                couch_http_port = port, 
-               secure=https, 
-               user=user,
-               password=password)
+               secure = https, 
+               user = user,
+               password = password)
   class(conn) <- "couch_connection"
   conn
 }
@@ -163,13 +163,13 @@ couch_http_connection <- function(host,
 #' @param conn a couchDB connection object
 #' @method print couch_connection
 print.couch_connection <- function(conn) {
-  if(conn$secure== TRUE) {
+  if(conn$secure == TRUE) {
     proto <- "https"
   } else {
     proto <- "http"
   }
-  p <- paste(proto, conn$couch_http_host, conn$couch_http_port, sep=",")
-  url <- paste(proto, "://", conn$couch_http_host, ":", conn$couch_http_port, sep="")
+  p <- paste(proto, conn$couch_http_host, conn$couch_http_port, sep = ",")
+  url <- paste(proto, "://", conn$couch_http_host, ":", conn$couch_http_port, sep = "")
 
   paste("CouchDB connection to: (", url, ")")
 }
@@ -199,17 +199,17 @@ couch_ping <- function(conn) {
 
 # Internal use
 couch_store_headers_put <- function(content_type, opts) {
-  c("Content-Type"=content_type)
+  c("Content-Type" = content_type)
 }
 
 # Internal use.
 couch_store_headers_post <- function(content_type, opts) {
-  c("Content-Type"=content_type)
+  c("Content-Type" = content_type)
 }
 
 # Couch_fetch_raw returns the entire HTTP response
 # you'll need to decode the response using content()
-couch_fetch_raw <- function(conn, database, key, opts=NULL) {
+couch_fetch_raw <- function(conn, database, key, opts = NULL) {
   path <- couch_fetch_url(conn, database, key, opts)
   expected_codes <- c(200, 300, 304)
   result <- GET(path)
@@ -232,7 +232,7 @@ couch_fetch_raw <- function(conn, database, key, opts=NULL) {
 #' @description
 #' Send attachment to an existing url
 #' @export
-couch_attach <- function(location,revtag,attachment,content_type="image/png"){
+couch_attach <- function(location,revtag,attachment,content_type = "image/png"){
   path <- paste0(location,"/",basename(attachment),"?rev=",revtag)
   headers <- couch_store_headers_put(content_type)
   command <- paste0('curl -vX PUT ',
@@ -253,7 +253,7 @@ couch_attach <- function(location,revtag,attachment,content_type="image/png"){
 #'@export
 couch_fetch <- function(conn, database, key, myOpts=NULL) {
   result <- couch_fetch_raw(conn, database, key, myOpts)
-  fromJSON(content(result, as="parsed"))
+  fromJSON(content(result, as = "parsed"))
 }
 
 #'@title Fetch attachment 
@@ -274,8 +274,8 @@ couch_fetch_attachment <- function(conn,database,key,attachment){
 #'@param myOpts Additional options (not implemented in this version) 
 #'@return A list object with the values from the record.
 #'@export
-couch_fetch_default <- function(key, myOpts=NULL){
-  couch_fetch(conn=couch_default_connection,database=couch_default_database,key,myOpts)  
+couch_fetch_default <- function(key, myOpts = NULL){
+  couch_fetch(conn = couch_default_connection,database = couch_default_database,key,myOpts)  
 }
 
 
@@ -290,16 +290,16 @@ couch_fetch_default <- function(key, myOpts=NULL){
 #' @examples \dontrun{ 
 #'    # This code creates a document containing a small list for storage in the "localhost" 
 #'    # database with the key "testDoc".
-#'    myDoc <- couch_new_object(list(a=1,b=2),"localhost","testDoc") 
+#'    myDoc <- couch_new_object(list(a = 1,b = 2),"localhost","testDoc") 
 #'    
 #'    #Same as above but with json entered directly (not recommended).
 #'    myDoc <- couch_new_object('{"a":1,"b":2}',"localhost","testDoc")
 #' } 
 #'@export
-couch_new_object <- function(value, database=NULL, key=NULL) {
+couch_new_object <- function(value, database = NULL, key = NULL) {
   if (is.null(database))database <- couch_default_database
   if(is.list(value))value<-toJSON(value)
-  list(value=value, database=database, key=key, content_type="application/json")
+  list(value = value, database = database, key = key, content_type = "application/json")
 }
 
 #'@title Create database
@@ -325,15 +325,15 @@ couch_create_database<- function(conn,dbname){
 #'@param myOpts Additional options (not implemented in this version) 
 #'@description Stores a record to the connection provided (database spec is in object )
 #'@export
-couch_store <- function(conn, obj, myOpts=NULL) { 
+couch_store <- function(conn, obj, myOpts = NULL) { 
   path <- couch_store_url(conn, obj$database, obj$key)
   expected_codes <- c(200, 201, 204, 300)
   accept_json()
   headers <- couch_store_headers_post(obj$content_type, myOpts)
   if(is.null(obj$key)){
-    result <- POST(path, body=obj$value,add_headers(headers))
+    result <- POST(path, body = obj$value,add_headers(headers))
   } else {
-    result <- PUT(path, body=obj$value,add_headers(headers))
+    result <- PUT(path, body = obj$value,add_headers(headers))
   }
   result
 }
@@ -343,15 +343,15 @@ couch_store <- function(conn, obj, myOpts=NULL) {
 #'@param myOpts Additional options (not implemented in this version) 
 #'@description Stores a record on the default connection.
 #'@export
-couch_store_default <- function(obj, myOpts=NULL) { 
+couch_store_default <- function(obj, myOpts = NULL) { 
   path <- couch_store_url(couch_default_connection, obj$database, obj$key)
   expected_codes <- c(200, 201, 204, 300)
   accept_json()
   headers <- couch_store_headers_post(obj$content_type, myOpts)
   if(is.null(obj$key)){
-    result <- POST(path, body=obj$value,add_headers(headers))
+    result <- POST(path, body = obj$value,add_headers(headers))
   } else {
-    result <- PUT(path, body=obj$value,add_headers(headers))
+    result <- PUT(path, body = obj$value,add_headers(headers))
   }
   result
 }
@@ -364,7 +364,7 @@ couch_store_default <- function(obj, myOpts=NULL) {
 #'@param key key (record) to delete
 #'@param myOpts Additional options (not implemented in this version) 
 #'@export
-couch_delete <- function(conn, database, key, myOpts=NULL) {
+couch_delete <- function(conn, database, key, myOpts = NULL) {
   path <- couch_delete_url(conn, database, key, myOpts)
   expected_codes <- c(204, 404)
   result <- DELETE(path)
@@ -378,7 +378,7 @@ couch_mapreduce <- function(conn, query) {
   path <- couch_mapred_url(conn)
   expected_codes <- c(200)
   add_headers("ContentType: application/json")
-  result <- POST(path,body=query)
+  result <- POST(path,body = query)
   content(couch_check_status(conn, expected_codes, result))
 }
 
