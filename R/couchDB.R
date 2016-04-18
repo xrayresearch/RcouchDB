@@ -1,11 +1,8 @@
-####################################################################
-# Couch R Client
-# Programmer: Aleksander Dietrichson
-# Purpose: interface with couchDB
 require(bitops)
 require(RCurl)
 require(httr)
 require(rjson)
+
 #'@import bitops
 #'@import RCurl
 #'@import httr
