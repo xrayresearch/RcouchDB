@@ -10,6 +10,7 @@ require(rjson)
 #description formats name-value pair as url parameter
 couch_default_database = NULL
 couch_default_connection = NULL
+
 url_param <- function(name, value) {
   if(is.null(value)) {
     NULL
@@ -34,17 +35,31 @@ couch_base_url <- function(conn) {
   } else {
     proto <- "http"
   }
-  if(!is.null(conn$user)){
-    auth <- paste0(conn$user,":",conn$password,"@") 
-  } else {
-    auth <-"" 
+  if(conn$service == "couchdb"){
+    if(!is.null(conn$user)){
+      auth <- paste0(conn$user,":",conn$password,"@") 
+    } else {
+      auth <-"" 
+    }
+    base_url <- paste0(proto, 
+                       "://", 
+                       auth, 
+                       conn$couch_http_host, 
+                       ":", 
+                       conn$couch_http_port)
   }
-  base_url <- paste0(proto, 
-                     "://", 
-                     auth, 
-                     conn$couch_http_host, 
-                     ":", 
-                     conn$couch_http_port)
+  if(conn$service == "cloudant"){
+  # Cloudant does not accept a port number when calling the service
+    if(!is.null(conn$user)){
+      auth <- paste0(conn$user,":",conn$password,"@") 
+    } else {
+      auth <-"" 
+    }
+    base_url <- paste0(proto, 
+                       "://", 
+                       auth, 
+                       conn$couch_http_host)
+  }
   base_url
 }
 
@@ -133,9 +148,11 @@ couch_list_databases_url <- function(conn) {
 
 #' @title Connection to couchDB
 #' @description Creates a connection object on the host and ports provided
+#'
 #' @param host The IP address of the couchDB instance
 #' @param port The port to connect to
 #' @param https Should a ssl protocol be used
+#' @param service the service used accepts either "couchdb" or "cloudant"
 #' @param user Username on the database server
 #' @param password Password for the database server
 #' @examples \dontrun{ 
@@ -145,12 +162,14 @@ couch_list_databases_url <- function(conn) {
 couch_http_connection <- function(host, 
                                   port = 5984, 
                                   https = FALSE, 
+                                  service = "couchdb", 
                                   user = NULL, 
                                   password = NULL) {
   
   conn <- list(couch_http_host = host, 
                couch_http_port = port, 
                secure = https, 
+               service = service,
                user = user,
                password = password)
   class(conn) <- "couch_connection"
