@@ -20,4 +20,6 @@ vignettes/*.pdf
 # OAuth2 token
 .httr-oauth
 
-.Rproj.user
+# Passwords
+*/*/test_auth.R
+
