@@ -3,6 +3,7 @@ require(RCurl)
 require(httr)
 require(rjson)
 
+
 #'@import bitops
 #'@import RCurl
 #'@import httr
@@ -407,6 +408,5 @@ couch_mapreduce <- function(conn, query) {
 #'@export
 couch_list_databases <- function(conn) {
   path <- couch_list_databases_url(conn)
-  expected_codes <- c(200)
-  fromJSON(content(GET(path)))
+  unlist(content(GET(path)))
 }
