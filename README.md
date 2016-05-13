@@ -8,15 +8,12 @@ Couchdb](http://couchdb.apache.org) or the implementation by IBM as [IBM
 Cloudant](http://cloudant.com).
 
 ## Usage
-You can install the library from CRAN:
+The pacakge on [CRAN](https://cran.r-project.org/web/packages/couchDB/index.html) 
+is outdated at this moment. To follow the examples below (especially the
+connection to Cloudant), please install the source code in this development branch with 
+[devtools](https://cran.r-project.org/web/packages/devtools/index.html):
 
-    install.packages("couchDB")
-    
-If you want to use any development branch on github you can use
-[devtools](https://cran.r-project.org/web/packages/devtools/index.html).  for
-example:
-
-    devtools::install_github("xrayresearch/RcouchDB")
+    devtools::install_github("FvD/RcouchDB")
     
 ### Get connected
 
@@ -42,6 +39,21 @@ Content-type: text/plain; charset=utf-8
 Size: 151 B
 {"couchdb":"Welcome","uuid":"c1a367c91517195b57ddafe788a72b75","version":"1.4.0","vendor"
 {"name":"...
+```
+
+To connect to cloudant specify the service (it defaults to couchdb) as follows:
+
+    myConn <- couch_http_connection(host = "demo.cloudant.com",
+                                    https = TRUE,
+                                    service = "cloudant")
+
+```
+Response [https://demo.cloudant.com/]
+  Date: 2016-05-13 16:50
+  Status: 200
+  Content-Type: application/json
+  Size: 64 B
+{"couchdb":"Welcome","version":"1.0.2","cloudant_build":"2580"}
 ```
 
 ### Databases
