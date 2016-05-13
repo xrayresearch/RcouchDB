@@ -3,7 +3,6 @@ require(RCurl)
 require(httr)
 require(rjson)
 
-
 #'@import bitops
 #'@import RCurl
 #'@import httr
@@ -13,13 +12,13 @@ couch_default_database = NULL
 couch_default_connection = NULL
 
 url_param <- function(name, value) {
-  if(is.null(value)) {
+  if (is.null(value)) {
     NULL
   } else {
-    if(is.logical(value)) {
-      paste(name," = ",curlEscape(tolower(value)), sep = "")
+    if (is.logical(value)) {
+      paste(name," = ", curlEscape(tolower(value)), sep = "")
     } else {
-      paste(name," = ",curlEscape(value), sep = "")
+      paste(name," = ", curlEscape(value), sep = "")
     }
   }
 }
@@ -30,17 +29,16 @@ make_query_string <- function(params) {
 }
 
 couch_base_url <- function(conn) {
-  #TODO: update here for password authentication
-  if(conn$secure == TRUE) {
+  if (conn$secure == TRUE) {
     proto <- "https"
   } else {
     proto <- "http"
   }
-  if(conn$service == "couchdb"){
-    if(!is.null(conn$user)){
+  if (conn$service == "couchdb") {
+    if (!is.null(conn$user)) {
       auth <- paste0(conn$user,":",conn$password,"@") 
     } else {
-      auth <-"" 
+      auth <- "" 
     }
     base_url <- paste0(proto, 
                        "://", 
@@ -49,10 +47,10 @@ couch_base_url <- function(conn) {
                        ":", 
                        conn$couch_http_port)
   }
-  if(conn$service == "cloudant"){
+  if (conn$service == "cloudant") {
   # Cloudant does not accept a port number when calling the service
-    if(!is.null(conn$user)){
-      auth <- paste0(conn$user,":",conn$password,"@") 
+    if (!is.null(conn$user)) {
+      auth <- paste0(conn$user,":", conn$password, "@") 
     } else {
       auth <-"" 
     }
@@ -277,15 +275,15 @@ couch_fetch <- function(conn, database, key, myOpts=NULL) {
 }
 
 #'@title Fetch attachment 
-#'@description Gets a named attachment from a recors
+#'@description Gets a named attachment from a resource
 #'@param conn A couchDB connection object
-#'@param database The database to connecto to
+#'@param database The database to connect to
 #'@param key Key of document
 #'@param attachment name of attachment
 #'@export
 couch_fetch_attachment <- function(conn,database,key,attachment){
   key <- paste0(key,"/",attachment)
-  couch_fetch_raw(conn,database,key,NULL)
+  couch_fetch_raw(conn,database,key, NULL)
 }
 
 #'@title Fetch document/record from default store.
@@ -300,13 +298,14 @@ couch_fetch_default <- function(key, myOpts = NULL){
 
 
 #'@title New couchDB document
-#'@param value  List to be converted to json for transmission or preformatted JSON string
+#'@param value  List to be converted to json for transmission or pre-formatted
+#'JSON string
 #'@param database  The database to use
 #'@param key  The key (recordname) to use for the object.
 #'@description Creates a new object to to insert to the couchDB.
 #'Takes either a list or a formatted json object as value
-#'Any attachment to the record needs to be base64-enconded added to the list as "_attachments"
-#'If key is provided this is used, null sends a key-less record to couch and the key will have to be retrieved from the reponse object.
+#'Any attachment to the record needs to be base64-encoded added to the list as "_attachments"
+#'If key is provided this is used, null sends a key-less record to couch and the key will have to be retrieved from the response object.
 #' @examples \dontrun{ 
 #'    # This code creates a document containing a small list for storage in the "localhost" 
 #'    # database with the key "testDoc".

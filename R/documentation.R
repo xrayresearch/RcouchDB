@@ -14,7 +14,7 @@
 #' 
 #' For convenience a default connection can also be created with \link{couch_set_default_connection} using the same parameters.
 #' 
-#' Once a connection object exists, you may want to make sure it is connecting correctly with the \link{couch_ping} function. If you are properly connected the reponse should be like:
+#' Once a connection object exists, you may want to make sure it is connecting correctly with the \link{couch_ping} function. If you are properly connected the response should be like:
 #' \preformatted{
 #' Response [http://localhost:5984]
 #' Status: 200
