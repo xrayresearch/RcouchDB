@@ -52,7 +52,7 @@ couch_base_url <- function(conn) {
     if (!is.null(conn$user)) {
       auth <- paste0(conn$user,":", conn$password, "@") 
     } else {
-      auth <-"" 
+      auth <- "" 
     }
     base_url <- paste0(proto, 
                        "://", 
@@ -62,7 +62,7 @@ couch_base_url <- function(conn) {
   base_url
 }
 
-couch_fetch_url <- function(conn,database,key = NULL,opts = NULL){
+couch_fetch_url <- function(conn,database,key = NULL, opts = NULL){
   url <- paste(couch_base_url(conn), database, key, sep = "/")
   url
 }
@@ -75,19 +75,22 @@ couch_fetch_url <- function(conn,database,key = NULL,opts = NULL){
 #'@param key Document key
 #'@param attachment Name of the attachment
 #'@export
-couch_fetch_attachment_url <- function(conn,database,key = NULL,attachment = NULL){
+couch_fetch_attachment_url <- function(conn, 
+                                       database, 
+                                       key = NULL, 
+                                       attachment = NULL){
   url <- paste(couch_base_url(conn), database, key,attachment, sep = "/")
   url
 }
 
 couch_store_url <- function(conn, database, key = NULL, opts = NULL) {
-  if(is.null(key)) {
+  if (is.null(key)) {
     url <- paste(couch_base_url(conn), database, sep = "/")
   } else {
     url <- paste(couch_base_url(conn), database, key, sep = "/")
     #check for revision number
     revision_number <- HEAD(url)$header$etag
-    if(!is.null(revision_number)){ 
+    if (!is.null(revision_number)){ 
       url <- paste0(url,"?rev=",gsub("\"","",revision_number))
     }
   }
@@ -128,7 +131,7 @@ couch_set_default_connection <- function(host,port = 5984, https = FALSE){
 #'@param database the database to use as default (String)
 #'@export
 couch_set_default_database <- function(database){
-  if(is.character(database)){
+  if (is.character(database)) {
     couch_default_database <<- database
   } else {
     warning("Default database could not be set.")
@@ -181,7 +184,7 @@ couch_http_connection <- function(host,
 #' @param conn a couchDB connection object
 #' @method print couch_connection
 print.couch_connection <- function(conn) {
-  if(conn$secure == TRUE) {
+  if (conn$secure == TRUE) {
     proto <- "https"
   } else {
     proto <- "http"
@@ -194,7 +197,7 @@ print.couch_connection <- function(conn) {
 
 couch_check_status <- function(conn, expected_codes, response) {
   status_code <- response$status_code
-  if(any(expected_codes == status_code)) {
+  if (any(expected_codes == status_code)) {
     response
   } else {
     # TODO - better error handling
@@ -232,7 +235,7 @@ couch_fetch_raw <- function(conn, database, key, opts = NULL) {
   expected_codes <- c(200, 300, 304)
   result <- GET(path)
   status_code <- result$status_code
-  if(any(expected_codes == status_code)) {
+  if (any(expected_codes == status_code)) {
     result
   } else {
     # TODO
@@ -250,7 +253,11 @@ couch_fetch_raw <- function(conn, database, key, opts = NULL) {
 #' @description
 #' Send attachment to an existing url
 #' @export
-couch_attach <- function(location,revtag,attachment,content_type = "image/png"){
+couch_attach <- function(location, 
+                         revtag,  
+                         attachment, 
+                         content_type = "image/png"){
+
   path <- paste0(location,"/",basename(attachment),"?rev=",revtag)
   headers <- couch_store_headers_put(content_type)
   command <- paste0('curl -vX PUT ',
@@ -270,8 +277,10 @@ couch_attach <- function(location,revtag,attachment,content_type = "image/png"){
 #'@return A list object with the values from the record.
 #'@export
 couch_fetch <- function(conn, database, key, myOpts=NULL) {
+  if (!exists("database")) {warning("you must specify a database")}
+  if (!exists("key")) {warning("you must specify a document key")}
   result <- couch_fetch_raw(conn, database, key, myOpts)
-  fromJSON(content(result, as = "parsed"))
+  content(result, as = "parsed", encoding = "UTF-8")
 }
 
 #'@title Fetch attachment 
@@ -316,8 +325,8 @@ couch_fetch_default <- function(key, myOpts = NULL){
 #' } 
 #'@export
 couch_new_object <- function(value, database = NULL, key = NULL) {
-  if (is.null(database))database <- couch_default_database
-  if(is.list(value))value<-toJSON(value)
+  if (is.null(database)) database <- couch_default_database
+  if (is.list(value)) value <- toJSON(value)
   list(value = value, database = database, key = key, content_type = "application/json")
 }
 
@@ -332,7 +341,7 @@ couch_new_object <- function(value, database = NULL, key = NULL) {
 #'    couch_create_database(myConn,"myDatabase") 
 #' } 
 #'@export
-couch_create_database<- function(conn,dbname){
+couch_create_database <- function(conn,dbname){
   path = paste0(couch_base_url(conn),"/",dbname)
   result <- PUT(path)
   result
@@ -349,10 +358,10 @@ couch_store <- function(conn, obj, myOpts = NULL) {
   expected_codes <- c(200, 201, 204, 300)
   accept_json()
   headers <- couch_store_headers_post(obj$content_type, myOpts)
-  if(is.null(obj$key)){
-    result <- POST(path, body = obj$value,add_headers(headers))
+  if (is.null(obj$key)) {
+    result <- POST(path, body = obj$value, add_headers(headers))
   } else {
-    result <- PUT(path, body = obj$value,add_headers(headers))
+    result <- PUT(path, body = obj$value, add_headers(headers))
   }
   result
 }
@@ -367,7 +376,7 @@ couch_store_default <- function(obj, myOpts = NULL) {
   expected_codes <- c(200, 201, 204, 300)
   accept_json()
   headers <- couch_store_headers_post(obj$content_type, myOpts)
-  if(is.null(obj$key)){
+  if (is.null(obj$key)) {
     result <- POST(path, body = obj$value,add_headers(headers))
   } else {
     result <- PUT(path, body = obj$value,add_headers(headers))
