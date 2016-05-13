@@ -14,3 +14,4 @@ Depends:
 Description: Interface to couchDB
 SystemRequirements: couchDB instance to connect to and work on.
 License: AGPL-3
+Suggests: testthat
