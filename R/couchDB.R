@@ -190,7 +190,8 @@ print.couch_connection <- function(conn) {
     proto <- "http"
   }
   p <- paste(proto, conn$couch_http_host, conn$couch_http_port, sep = ",")
-  url <- paste(proto, "://", conn$couch_http_host, ":", conn$couch_http_port, sep = "")
+  url <- paste(proto, "://", conn$couch_http_host, ":", 
+               conn$couch_http_port, sep = "")
 
   paste("CouchDB connection to: (", url, ")")
 }
@@ -296,13 +297,15 @@ couch_fetch_attachment <- function(conn,database,key,attachment){
 }
 
 #'@title Fetch document/record from default store.
-#'@description Fetches a document specified by Key from the default database on the default connection
+#'@description Fetches a document specified by Key from the default database on
+#'the default connection
 #'@param key  The key of the document to fetch
 #'@param myOpts Additional options (not implemented in this version) 
 #'@return A list object with the values from the record.
 #'@export
 couch_fetch_default <- function(key, myOpts = NULL){
-  couch_fetch(conn = couch_default_connection,database = couch_default_database,key,myOpts)  
+  couch_fetch(conn = couch_default_connection,
+              database = couch_default_database, key, myOpts)  
 }
 
 
@@ -313,8 +316,10 @@ couch_fetch_default <- function(key, myOpts = NULL){
 #'@param key  The key (recordname) to use for the object.
 #'@description Creates a new object to to insert to the couchDB.
 #'Takes either a list or a formatted json object as value
-#'Any attachment to the record needs to be base64-encoded added to the list as "_attachments"
-#'If key is provided this is used, null sends a key-less record to couch and the key will have to be retrieved from the response object.
+#'Any attachment to the record needs to be base64-encoded added to the list as
+#'"_attachments"
+#'If key is provided this is used, null sends a key-less record to couch and
+#'the key will have to be retrieved from the response object.
 #' @examples \dontrun{ 
 #'    # This code creates a document containing a small list for storage in the "localhost" 
 #'    # database with the key "testDoc".
@@ -351,7 +356,8 @@ couch_create_database <- function(conn,dbname){
 #'@param conn A couchDB connection object
 #'@param obj  A list formatted by calling couch_new_object
 #'@param myOpts Additional options (not implemented in this version) 
-#'@description Stores a record to the connection provided (database spec is in object )
+#'@description Stores a record to the connection provided (database spec is in
+#'object )
 #'@export
 couch_store <- function(conn, obj, myOpts = NULL) { 
   path <- couch_store_url(conn, obj$database, obj$key)
