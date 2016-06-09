@@ -24,3 +24,6 @@ vignettes/*.pdf
 */*/test_auth.R
 
 .Rproj.user
+
+# vim on win
+*.*~
