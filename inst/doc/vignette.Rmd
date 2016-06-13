@@ -21,7 +21,8 @@ To interact with a couchDB instance you will need to create a connection
 object. Communication with couchDB happens over a http protocol. A minimal
 connection (running on the default port and no password protection) would be:
 
-```{r}
+```{r, message=FALSE}
+library(couchDB)
 myConn  <- couch_http_connection("localhost")
 ```
  
