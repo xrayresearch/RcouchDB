@@ -1,5 +1,9 @@
 # R-couchDB
-R interface to the CouchDB database
+[![Travis-CI Build Status](https://travis-ci.org/FvD/RcouchDB.svg?branch=master)](https://travis-ci.org/FvD/RcouchDB) 
+[![Coverage Status](https://img.shields.io/codecov/c/github/FvD/RcouchDB/master.svg)](https://codecov.io/github/FvD/RcouchDB?branch=master) 
+[![CRAN Status Badge](http://www.r-pkg.org/badges/version/couchDB)](https://cran.r-project.org/web/packages/couchDB)
+
+# R interface to the CouchDB database
 
 ## Description
 This package contains various functions for interacting with couchDB - a
@@ -41,7 +45,7 @@ Size: 151 B
 {"name":"...
 ```
 
-To connect to cloudant specify the service (it defaults to couchdb) as follows:
+To connect to cloudant specify the service (otherwise it defaults to couchdb) as follows:
 
     myConn <- couch_http_connection(host = "demo.cloudant.com",
                                     https = TRUE,
