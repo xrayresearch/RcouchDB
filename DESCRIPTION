@@ -2,14 +2,14 @@ Package: couchDB
 Type: Package
 Title: Connect to and work with couchDB databases
 Description: Interface to the couchDB document database <http://couchdb.apache.org>.
-Version: 1.4.0.9001
+Version: 1.4.0.9003
 Date: 2016-06-13
 Authors@R: c(person("Aleksander", "Dietrichson", ,
                     "sasha@xrrch.com",
-                    c("aut")),
+                    c("aut", "cre")),
             person("Frans", "van Dunné", ,
                     "frans@ixpantia.com",
-                    c("ctb", "cre"))
+                    c("ctb"))
              )
 Depends:
     R (>= 3.0.0),
@@ -17,7 +17,7 @@ Depends:
     bitops,
     httr,
     rjson
-SystemRequirements: couchDB instance to connect to and work on.
+SystemRequirements: couchDB instance to connect to and work with.
 License: AGPL-3
 Suggests:
     testthat
