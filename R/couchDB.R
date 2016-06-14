@@ -3,11 +3,11 @@ require(RCurl)
 require(httr)
 require(rjson)
 
-#'@import bitops
-#'@import RCurl
-#'@import httr
-#'@import rjson
-#description formats name-value pair as url parameter
+#' @import bitops
+#' @import RCurl
+#' @import httr
+#' @import rjson
+# description formats name-value pair as url parameter
 couch_default_database = NULL
 couch_default_connection = NULL
 
@@ -67,14 +67,14 @@ couch_fetch_url <- function(conn,database,key = NULL, opts = NULL){
   url
 }
 
-#'@title Get attachment url
-#'@description Get the url for a specific attachment, This is sometimes useful
-#'for direct reads to functions, in lieu of storing tempfiles.
-#'@param conn A connection object
-#'@param database The database name
-#'@param key Document key
-#'@param attachment Name of the attachment
-#'@export
+#' @title Get attachment url
+#' @description Get the url for a specific attachment, This is sometimes useful
+#' for direct reads to functions, in lieu of storing tempfiles.
+#' @param conn A connection object
+#' @param database The database name
+#' @param key Document key
+#' @param attachment Name of the attachment
+#' @export
 couch_fetch_attachment_url <- function(conn, 
                                        database, 
                                        key = NULL, 
@@ -113,23 +113,24 @@ couch_stats_url <- function(conn) {
 couch_mapred_url <- function(conn) {
   paste(couch_base_url(conn), "/mapred", sep = "")
 }
-#'@title Set default connection
-#'@description Sets up a couchDB connection to use as default
+
+#' @title Set default connection
+#' @description Sets up a couchDB connection to use as default
 #' @param host The IP address of the couchDB instance
 #' @param port The port to connect to
 #' @param https Should a ssl protocol be used?
 #' @export
-couch_set_default_connection <- function(host,port = 5984, https = FALSE){
+couch_set_default_connection <- function(host, port = 5984, https = FALSE){
   couch_default_connection <<- couch_http_connection(host = host,
                                                      port = port,
                                                      https = https)
 }
 
-#'@title Set a database as default document store
-#'@description Specifies a database to write to on a couch connection by
-#'default.
-#'@param database the database to use as default (String)
-#'@export
+#' @title Set a database as default document store
+#' @description Specifies a database to write to on a couch connection by
+#' default.
+#' @param database the database to use as default (String)
+#' @export
 couch_set_default_database <- function(database){
   if (is.character(database)) {
     couch_default_database <<- database
@@ -138,10 +139,9 @@ couch_set_default_database <- function(database){
   }
 }
 
-#title couch_list_databases_url
-#description Format the url for fetching database-list
-#for internal use
-#param conn: A couchDB connection object.
+#' @title couch_list_databases_url
+#' @description Format the url for fetching database-list for internal use
+#' @param conn A couchDB connection object.
 couch_list_databases_url <- function(conn) {
   paste(couch_base_url(conn), "_all_dbs", sep = "/")
 }
@@ -269,14 +269,14 @@ couch_attach <- function(location,
 }
 
 
-#'@title Fetch a document/record.
-#'@description Fetches a couch object based on the key
-#'@param conn  A couchDB connection object
-#'@param database  The database to connect to.
-#'@param key Key of document to fetch
-#'@param myOpts Additional options (not implemented in this version) 
-#'@return A list object with the values from the record.
-#'@export
+#' @title Fetch a document/record.
+#' @description Fetches a couch object based on the key
+#' @param conn  A couchDB connection object
+#' @param database  The database to connect to.
+#' @param key Key of document to fetch
+#' @param myOpts Additional options (not implemented in this version) 
+#' @return A list object with the values from the record.
+#' @export
 couch_fetch <- function(conn, database, key, myOpts=NULL) {
   if (!exists("database")) {warning("you must specify a database")}
   if (!exists("key")) {warning("you must specify a document key")}
@@ -284,81 +284,82 @@ couch_fetch <- function(conn, database, key, myOpts=NULL) {
   content(result, as = "parsed", encoding = "UTF-8")
 }
 
-#'@title Fetch attachment 
-#'@description Gets a named attachment from a resource
-#'@param conn A couchDB connection object
-#'@param database The database to connect to
-#'@param key Key of document
-#'@param attachment name of attachment
-#'@export
+#' @title Fetch attachment 
+#' @description Gets a named attachment from a resource
+#' @param conn A couchDB connection object
+#' @param database The database to connect to
+#' @param key Key of document
+#' @param attachment name of attachment
+#' @export
 couch_fetch_attachment <- function(conn,database,key,attachment){
   key <- paste0(key,"/",attachment)
   couch_fetch_raw(conn,database,key, NULL)
 }
 
-#'@title Fetch document/record from default store.
-#'@description Fetches a document specified by Key from the default database on
-#'the default connection
-#'@param key  The key of the document to fetch
-#'@param myOpts Additional options (not implemented in this version) 
-#'@return A list object with the values from the record.
-#'@export
+#' @title Fetch document/record from default store.
+#' @description Fetches a document specified by Key from the default database on
+#' the default connection
+#' @param key  The key of the document to fetch
+#' @param myOpts Additional options (not implemented in this version) 
+#' @return A list object with the values from the record.
+#' @export
 couch_fetch_default <- function(key, myOpts = NULL){
   couch_fetch(conn = couch_default_connection,
               database = couch_default_database, key, myOpts)  
 }
 
 
-#'@title New couchDB document
-#'@param value  List to be converted to json for transmission or pre-formatted
-#'JSON string
-#'@param database  The database to use
-#'@param key  The key (recordname) to use for the object.
-#'@description Creates a new object to to insert to the couchDB.
-#'Takes either a list or a formatted json object as value
-#'Any attachment to the record needs to be base64-encoded added to the list as
-#'"_attachments"
-#'If key is provided this is used, null sends a key-less record to couch and
-#'the key will have to be retrieved from the response object.
+#' @title New couchDB document
+#' @param value  List to be converted to json for transmission or pre-formatted
+#' JSON string
+#' @param database  The database to use
+#' @param key  The key (recordname) to use for the object.
+#' @description Creates a new object to to insert to the couchDB.
+#' Takes either a list or a formatted json object as value
+#' Any attachment to the record needs to be base64-encoded added to the list as
+#' "_attachments"
+#' If key is provided this is used, null sends a key-less record to couch and
+#' the key will have to be retrieved from the response object.
 #' @examples \dontrun{ 
-#'    # This code creates a document containing a small list for storage in the "localhost" 
-#'    # database with the key "testDoc".
+#'    # This code creates a document containing a small list for storage in 
+#'    # the "localhost" database with the key "testDoc".
 #'    myDoc <- couch_new_object(list(a = 1,b = 2),"localhost","testDoc") 
 #'    
-#'    #Same as above but with json entered directly (not recommended).
+#'    # Same as above but with json entered directly (not recommended).
 #'    myDoc <- couch_new_object('{"a":1,"b":2}',"localhost","testDoc")
 #' } 
-#'@export
+#' @export
 couch_new_object <- function(value, database = NULL, key = NULL) {
   if (is.null(database)) database <- couch_default_database
   if (is.list(value)) value <- toJSON(value)
   list(value = value, database = database, key = key, content_type = "application/json")
 }
 
-#'@title Create database
-#'@description Creates a new database based on the dbname.
-#'@param conn a couchDB connection object
-#'@param dbname the name of the database
-#'@description Creates a new couchDB database on the connection provided.
-#' @examples \dontrun{ 
+#' @title Create database
+#' @description Creates a new database based on the dbname.
+#' @param conn a couchDB connection object
+#' @param dbname the name of the database
+#' @description Creates a new couchDB database on the connection provided.
+#' @examples
+#' \dontrun{ 
 #' #Note: this example assumes that there is a couchDB instance available on localhost
-#'    myConn <- couch_http_connection("localhost")
-#'    couch_create_database(myConn,"myDatabase") 
-#' } 
-#'@export
+#'     myConn <- couch_http_connection("localhost")
+#'     couch_create_database(myConn,"myDatabase") 
+#'  } 
+#' @export
 couch_create_database <- function(conn,dbname){
   path = paste0(couch_base_url(conn),"/",dbname)
   result <- PUT(path)
   result
 }
 
-#'@title Store a record
-#'@param conn A couchDB connection object
-#'@param obj  A list formatted by calling couch_new_object
-#'@param myOpts Additional options (not implemented in this version) 
-#'@description Stores a record to the connection provided (database spec is in
-#'object )
-#'@export
+#' @title Store a record
+#' @param conn A couchDB connection object
+#' @param obj  A list formatted by calling couch_new_object
+#' @param myOpts Additional options (not implemented in this version) 
+#' @description Stores a record to the connection provided (database spec is in
+#' object )
+#' @export
 couch_store <- function(conn, obj, myOpts = NULL) { 
   path <- couch_store_url(conn, obj$database, obj$key)
   expected_codes <- c(200, 201, 204, 300)
@@ -372,11 +373,11 @@ couch_store <- function(conn, obj, myOpts = NULL) {
   result
 }
 
-#'@title Store a document on the default connection.
-#'@param obj A list formatted by calling couch_new_object.
-#'@param myOpts Additional options (not implemented in this version) 
-#'@description Stores a record on the default connection.
-#'@export
+#' @title Store a document on the default connection.
+#' @param obj A list formatted by calling couch_new_object.
+#' @param myOpts Additional options (not implemented in this version) 
+#' @description Stores a record on the default connection.
+#' @export
 couch_store_default <- function(obj, myOpts = NULL) { 
   path <- couch_store_url(couch_default_connection, obj$database, obj$key)
   expected_codes <- c(200, 201, 204, 300)
@@ -391,13 +392,13 @@ couch_store_default <- function(obj, myOpts = NULL) {
 }
 
 
-#'@title Delete a record.
-#'@description Delete a record on the connection provided
-#'@param conn  A couchDB connection object
-#'@param database Name of database to operate on
-#'@param key key (record) to delete
-#'@param myOpts Additional options (not implemented in this version) 
-#'@export
+#' @title Delete a record.
+#' @description Delete a record on the connection provided
+#' @param conn  A couchDB connection object
+#' @param database Name of database to operate on
+#' @param key key (record) to delete
+#' @param myOpts Additional options (not implemented in this version) 
+#' @export
 couch_delete <- function(conn, database, key, myOpts = NULL) {
   path <- couch_delete_url(conn, database, key, myOpts)
   expected_codes <- c(204, 404)
@@ -416,10 +417,10 @@ couch_mapreduce <- function(conn, query) {
   content(couch_check_status(conn, expected_codes, result))
 }
 
-#'@title List available databases.
-#'@param conn A couchDB connection object
-#'@description Lists the available databases on the connection provided.
-#'@export
+#' @title List available databases.
+#' @param conn A couchDB connection object
+#' @description Lists the available databases on the connection provided.
+#' @export
 couch_list_databases <- function(conn) {
   path <- couch_list_databases_url(conn)
   unlist(content(GET(path)))

@@ -15,7 +15,8 @@
 #' 
 #' The variable "myConn" can now be used as parameters to other functions. 
 #' 
-#' For convenience a default connection can also be created with \link{couch_set_default_connection} using the same parameters.
+#' For convenience a default connection can also be created with
+#' \link{couch_set_default_connection} using the same parameters.
 #' 
 #' Once a connection object exists, you may want to make sure it is connecting
 #' correctly with the \link{couch_ping} function. If you are properly connected
