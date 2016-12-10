@@ -1,9 +1,9 @@
 Package: couchDB
 Type: Package
-Title: Connect to and work with couchDB databases
+Title: Connect to and Work with CouchDB Databases
 Description: Interface to the couchDB document database <http://couchdb.apache.org>.
-Version: 1.4.0.9003
-Date: 2016-06-13
+Version: 1.4.1
+Date: 2016-07-25
 Authors@R: c(person("Aleksander", "Dietrichson", ,
                     "sasha@xrrch.com",
                     c("aut", "cre")),

@@ -1,7 +1,7 @@
 # R-couchDB
 [![Travis-CI Build Status](https://travis-ci.org/FvD/RcouchDB.svg?branch=master)](https://travis-ci.org/FvD/RcouchDB) 
 [![Coverage Status](https://img.shields.io/codecov/c/github/FvD/RcouchDB/master.svg)](https://codecov.io/github/FvD/RcouchDB?branch=master) 
-[![CRAN Status Badge](http://www.r-pkg.org/badges/version/couchDB)](https://cran.r-project.org/web/packages/couchDB)
+[![CRAN Status Badge](http://www.r-pkg.org/badges/version/couchDB)](https://cran.r-project.org/package=couchDB)
 
 # R interface to the CouchDB database
 
@@ -12,13 +12,9 @@ Couchdb](http://couchdb.apache.org) or the implementation by IBM as [IBM
 Cloudant](http://cloudant.com).
 
 ## Usage
-The pacakge on [CRAN](https://cran.r-project.org/web/packages/couchDB/index.html) 
-is outdated at this moment. To follow the examples below (especially the
-connection to Cloudant), please install the source code in this development branch with 
-[devtools](https://cran.r-project.org/web/packages/devtools/index.html):
 
-    devtools::install_github("FvD/RcouchDB")
-    
+Install the package from latest CRAN with install.package("couchDB"). 
+
 ### Get connected
 
 To interact with a couchDB instance you will need to create a connection
